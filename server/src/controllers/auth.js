@@ -25,6 +25,7 @@ exports.register = async (req, res) => {
       error: {
         message: error.details[0].message,
       },
+      detailMessage: "Length password at least 6 character"
     });
 
   try {
