@@ -7,8 +7,10 @@ import NavbarAdmin from "../components/NavbarAdmin";
 import dataCategory from "../fakeData/category";
 
 // Import useMutation from react-query here ...
+import { useMutation } from "react-query";
 
 // Get API config here ...
+import { API } from "../config/api"
 
 export default function AddCategoryAdmin() {
   console.clear();
@@ -20,12 +22,35 @@ export default function AddCategoryAdmin() {
   let api = API();
 
   // Create variabel for store data with useState here ...
+  const [category, setCategory] = useState("")
 
   const handleChange = (e) => {
     setCategory(e.target.value);
   };
 
   // Create function for handle insert category data with useMutation here ...
+  const handleSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault()
+
+      const body = JSON.stringify({ name: category })
+
+      const config = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: body
+      }
+
+      await api.post('/category', config)
+
+      history.push("/category-admin")
+
+    } catch (error) {
+      console.log(error);
+    }
+  })
 
   return (
     <>
